@@ -8,34 +8,36 @@ Wir wollen ein Tic Tac Toe Spiel für Android programmieren.
 
 ## Das "Tic Tac Toe" Projekt generieren
 
-Ein neues Projekt kann mit _File > New > New Project_ generiert werden.
+Im "Start Up" dialog von Android Start, auf "+Start a new Android project" klicken um ein neues Projekt zu generieren.  
+
+Wenn das Dialog schon zu ist, können neue Projekte durch _File > New > New Project_ generiert werden.
 
 Ein Dialog in zwei Schritte konfiguriert das Projekt:
 - Die  "Empty Activity" auswählen und auf _Next_ klicken.
 - "Tic Tac Toe" als _Name_ setzen.
-- Sicherstellen das folgende Werte richtig gesetzt sind:
+- Sicherstellen, dass folgende Werte richtig gesetzt sind:
   - Die _Language_ ist "Kotlin"
   - Die _Minmum API Level_ ist "API 24: Android 7.0 (Nougat)"
 
-Nachdem "Finish" geklickt wurde, generiert Android studio ein Neues Projekt. Zwei Dateien sind für uns besonderst wichtig:
-- `activity_main.xml` (in `res > layout`) ist die Layout-Datei mit dem einem "Hellow World" text.
-- `MainActivity.kt` (`app > java > com.test.tictactoe`) hat bereits den _Main_ "Entry point", mit dem nötigen Code um den Layout zu laden.
+Nachdem "Finish" geklickt wurde, generiert Android studio ein Neues Projekt. Zwei Dateien aus dem _app_ Ordner sind für uns besonderst wichtig:
+- `activity_main.xml` (in _app > res > layout_) ist die Layout-Datei mit dem einem "Hellow World" text.
+- `MainActivity.kt` (_app > java > com.example.tictactoe_) hat bereits den _Main_ "Entry point", mit dem nötigen Code, um das Layout zu laden.
 
 ## Das Layout gestalten
 
-Zuerst kümmern wir uns um den Layout.
+Zuerst kümmern wir uns um das Layout.
 
-Wir möchten ein Statustext ganz oben und darunter eine Tabelle mit drei Spalten und drei Zeilen, wo die `X` und `0` werden gesetzt.
+Wir möchten einen Statustext ganz oben und darunter eine Tabelle mit drei Spalten und drei Zeilen, in der die `X` und `0` gesetzt werden.
 
 ### Der Statustext
 
 Für den Statustext können wir das "Hello World" Textfeld benutzen.
 
-Auf dem "Hello World" klicken und in den _Attributes_ Panel folgende Werte setzen:
+Auf "Hello World" klicken und in den _Attributes_ Panel folgende Werte setzen:
 
-- _ID_: `statusText`
+- _id_: `statusText`
 - _text_: `X ist an der Reihe`
-- Obere _Constraint_ im Layout entfernen  
+- Untere _Constraint_ im Layout entfernen  
   ![](images/tic-tac-toe-status-top.gif)
 
 ### Das Spielgitter
@@ -46,48 +48,48 @@ Zuerst können wir ein _Table Layout_ aus der linke Palette ziehen und unter den
 
 ![](images/tic-tac-toe-table-layout.gif)
 
-Die Tabelle soll mit ein bisschen Rand bekommen und zum Quadratisch dargestellt werden.  
+Die Tabelle soll ein wenig Rand bekommen und quadratisch dargestellt werden.  
 
 Per Mausklick die Tabelle aktivieren und in _Constraint Widget_-Panel diese Werte setzen:
 
 - _Left Margin_ und _Right Margin_ sollen auf `8` gesetzt werden
 - _Top Margin_ auf `24`.
 - Eine "Top Constraint Layout" setzen.
-- Das Breite/Höhe Ration auf `1:1` setzen
+- Das Breite/Höhe Verhältnis auf `1:1` setzen
 
 ![](images/tic-tac-toe-size-constraints.gif)
 
 Für das Tic Tac Toe Spiel soll die Tabelle aus drei Zeilen und drei Spalten bestehen.  
 
-Im _Component tree_ Panel, das _TableLayout_ Element auswählen und:
+Im _Component Tree_ Panel, das _TableLayout_ Element auswählen und:
 
 - Die letzte Row entfernen.
 - Die drei Rows markieren und in den _Attributes_ Panel, den _layout_weight_ auf `1` setzen.
-- In der erste Zeile, ein _Plain Text`-Feld hinzufügen und sein _Text_ auf `X` setzen
-- Im _Component Tree_, das Feld Kopieren und zwei mal Einfügen (`ctrl-c ctrl-v ctrl-v`...)
-- Die _ID_ auf `topLeftText`, `topCenterText` und `topRightText` setzen
+- In der erste Zeile (Row), ein _TextView_-Feld aus der _Palette_ / _Text_ hinzufügen und sein _text_ auf `X` setzen
+- Im _Component Tree_, das soeben kreierte Feld kopieren und zwei mal in der erste Zeile einfügen (`ctrl-c ctrl-v ctrl-v`...)
+- Die _id_ auf `topLeftText`, `topCenterText` und `topRightText` setzen
 - Im _Component Tree_ alle drei Text-Felder auswählen und in den _Attributes_:
-  - _layout_height_ auf _Match Parent_ setzen.
+  - _layout_height_ auf _match_parent_ setzen.
   - _textAppareance_ auf _Large_ setzen
-  - Bei _gravity_, _Center_ aktivieren
+  - Bei _gravity_, _center_ aktivieren
   - _layout_weight_ auf `1` setzen.
 - ![](images/tic-tac-toe-columns.gif)
     - Im _Component Tree_
       - alle drei Text-Felder auswählen,
       - sie kopieren (`ctrl-c`)
-      - und in den zwei Weitere Zeilen einfügen (`ctrl-v`)
-      - die _ID_s umbennen (`centerLeftText` bis `bottomRightText`)
+      - und in den zwei weitere Zeilen einfügen (`ctrl-v`)
+      - die _id_s umbenennen (`centerLeftText` bis `bottomRightText`)
 
 Wir müssen noch die Linien zeichnen lassen indem wir ein Rahmen definieren.  
-Leider kennen die Tabellen keine Rahmen...  
-Wir müssen zuerst den _background_ von der ganze Tabelle auf `@android:color/black` setzen (du kannst anfangen black im text feld zu schreiben, und Android Studio wird die _richtige_ farbe vorschlagen).
+Leider haben die Tabellen keine Rahmen und wir müssen mit den Hintegrund von der Tabelle und den Zellen _spielen_...  
+Im _Component Tree_ TableView auswählen und in den _Attributes_ der Wert von _background_  auf `@android:color/black` setzen: Du kannst anfangen "black" ins Inputfeld zu schreiben, und Android Studio wird die _richtige_ Farbe vorschlagen (falls _background_ nicht sichtbar ist, kannst du ihn suchen...).
 
-Dann müssen wir im _Component Tree_ alle neun Zellen auswählen (vor dem klicken, die "Ctrl"-Taste drucken) und ihren _background_ auf `@android:color/white` setzen.
+Dann müssen wir im _Component Tree_ alle neun Zellen auswählen (vor dem Klicken, die "Ctrl"-Taste drücken) und ihren _background_ auf `@android:color/white` setzen.
 
 Wir brauchen noch die Ränder anzupassen:
 
-- Für die Zellen in der mittlere Spalte, setzen wir den _Layout_marginLeft_ und _Layout_marginRight_ auf `1dp`
-- Für die Zellen in der mittlere Zeile, setzen wir den _Layout_marginTop_ und _Layout_marginBottom_ auf `1dp`
+- Für die drei Zellen in der mittleren Spalte, setzen wir den _Layout_marginLeft_ und _Layout_marginRight_ auf `1dp`
+- Für die drei Zellen in der mittleren Zeile, setzen wir den _Layout_marginTop_ und _Layout_marginBottom_ auf `1dp`
 
 Das Layout ist fertig: wir können noch den `X` im _text_ bei allen Zellen entfernen.
 
@@ -95,7 +97,7 @@ Das Layout ist fertig: wir können noch den `X` im _text_ bei allen Zellen entfe
 
 Es ist nun Zeit zur `MainActivity.kt` zu wechseln und mit dem Programmieren anfangen.
 
-## Im Emulator die App Ausführen
+## Im Emulator die App ausführen
 
 Während der Gestaltungphase konnten wir das Design in Android Studio sehen. Sobal wir Code in der App haben, brauchen wir den Emulator, damit wir unser Programm wirkt.
 
@@ -295,7 +297,7 @@ fun isWinner(): Boolean {
             areEqual(topCenterText, centerCenterText, bottomCenterText) ||
             areEqual(topRightText, centerRightText, bottomRightText)
     val diagonal = areEqual(topLeftText, centerCenterText, bottomRightText) ||
-            areEqual(topRightText, centerCenterText, bottomCenterText)
+            areEqual(topRightText, centerCenterText, bottomLeftText)
     return horizontal || vertical || diagonal
 }
 ```
