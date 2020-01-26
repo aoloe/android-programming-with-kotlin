@@ -8,9 +8,8 @@ Wir wollen ein Tic Tac Toe Spiel für Android programmieren.
 
 ## Das "Tic Tac Toe" Projekt generieren
 
-Im "Start Up" dialog von Android Start, auf "+Start a new Android project" klicken um ein neues Projekt zu generieren.  
-
-Wenn das Dialog schon zu ist, können neue Projekte durch _File > New > New Project_ generiert werden.
+Nach der Installation von Android Studio, klick auf _+Start a new Android project_
+oder, wenn Android Studio bereits offen ist, führe _File > New > New Project_ aus.
 
 Ein Dialog in zwei Schritte konfiguriert das Projekt:
 - Die  "Empty Activity" auswählen und auf _Next_ klicken.
@@ -81,7 +80,7 @@ Im _Component Tree_ Panel, das _TableLayout_ Element auswählen und:
       - die _id_s umbenennen (`centerLeftText` bis `bottomRightText`)
 
 Wir müssen noch die Linien zeichnen lassen indem wir ein Rahmen definieren.  
-Leider haben die Tabellen keine Rahmen und wir müssen mit den Hintegrund von der Tabelle und den Zellen _spielen_...  
+Leider haben die Tabellen keine Rahmen und wir müssen mit dem Hintegrund von der Tabelle und den Zellen _spielen_...  
 Im _Component Tree_ TableView auswählen und in den _Attributes_ der Wert von _background_  auf `@android:color/black` setzen: Du kannst anfangen "black" ins Inputfeld zu schreiben, und Android Studio wird die _richtige_ Farbe vorschlagen (falls _background_ nicht sichtbar ist, kannst du ihn suchen...).
 
 Dann müssen wir im _Component Tree_ alle neun Zellen auswählen (vor dem Klicken, die "Ctrl"-Taste drücken) und ihren _background_ auf `@android:color/white` setzen.
@@ -95,15 +94,15 @@ Das Layout ist fertig: wir können noch den `X` im _text_ bei allen Zellen entfe
 
 ![](images/tic-tac-toe-layout.png)
 
-Es ist nun Zeit zur `MainActivity.kt` zu wechseln und mit dem Programmieren anfangen.
+Es ist nun Zeit zur `MainActivity.kt` zu wechseln und mit dem Programmieren anzufangen.
 
 ## Im Emulator die App ausführen
 
-Während der Gestaltungphase konnten wir das Design in Android Studio sehen. Sobal wir Code in der App haben, brauchen wir den Emulator, damit wir unser Programm wirkt.
+Während der Gestaltungphase konnten wir das Design in Android Studio sehen. Sobald wir Code in der App haben, brauchen wir den Emulator, damit unser Programm ausgeführt werden kann.
 
-Falls kein Emulator bereits Konfiguriert ist, kannst du darüber [lesen](emulator.md).
+Falls kein Emulator bereits konfiguriert ist, kannst du darüber [lesen](emulator.md).
 
-Der grüne Dreieck in der Toolbar startet das Emulator mit dem aktiven Projekt.
+Das grüne Dreieck in der Toolbar ![](images/android-studio-run-app-start.png) startet den Emulator für das aktive Projekt.
 
 ## Die Logik programmieren
 
@@ -113,27 +112,27 @@ In `MainActivity.kt` wurde eine `MainActivity` Klasse mit der `onCreate()` Funkt
 setContentView(R.layout.activity_main)
 ``` 
 
-Unsere erste Programmierungaufgabe ist ein `X` im oberen linken Feld erscheinen lassen, wenn wir darauf klicken. Dafür ergänzen wir die `onCreate()` Funktion mit unseren Code.
+Unsere erste Programmieraufgabe ist es, ein `X` im oberen linken Feld erscheinen zu lassen, wenn wir darauf klicken. Dafür ergänzen wir die `onCreate()` Funktion mit unserem Code.
 
-Wenn im Layout für das erste Textfeld die _ID_ `topLeftText` gesetzt hast, kanns du nach Zeile 11 eine neue Zeile hinzufügen und dort anfangen `top` zu schrieben. Android Studio sollte `topLeftText` vorschlagen: du kannst die Option mit der Eingabe-Taste bestätigen:
+Wenn du vorhin im Layout für das erste Textfeld die _ID_ `topLeftText` gesetzt hast, kannst du nach der Zeile 11 eine neue Zeile hinzufügen und dort anfangen `top` zu schreiben. Android Studio sollte `topLeftText` vorschlagen: du kannst die Option mit der Eingabe-Taste bestätigen:
 
 ![](images/tic-tac-toe-code-top-left-variable.gif)
 
-Damit hilft dir Android Studio nicht nur lange Namen zu tippen, sondern fügt er auch auf Zeile 5 ein `import`, dass alle Felder aus dem Layout im Code zu verfügung stellt:
+Damit hilft dir Android Studio nicht nur lange Namen zu tippen, sondern fügt auch auf Zeile 5 den `import` ein, wodurch alle Felder aus dem Layout nun auch im Code zu Verfügung stehen:
 
 ```kt
 import kotlinx.android.synthetic.main.activity_main.*
 ```
 
-Wenn du `topLeftText` ohne hilfe von Android Studio getippt hast, musst du noch die `import` zeile auch selber hinzufügen.
+Wenn du `topLeftText` ohne Hilfe von Android Studio getippt hast, musst du die `import` Zeile auch selbst hinzufügen.
 
-Jedes Feld aus dem Layout hat eine leere `setOnClickListener` Funktion die wir erweitern werden.
+Jedes Feld aus dem Layout hat eine leere `setOnClickListener` Funktion, die wir erweitern werden.
 
-Hier hilft dir Android Studio wieder beim Tippen: statt `setOnClickListener` kannst du `socl` tippen (die erste Buchstaben von "set on click listener"), die Version mit geschleifte Klammern wählen (`{}`) und Android Studio kümmert sich um den Rest:
+Hier hilft dir Android Studio wieder beim Tippen: statt `setOnClickListener` kannst du `socl` tippen (die ersten Buchstaben von "set on click listener"). Wähle aus den Vorschlägen die Version mit den geschleiften `{}` Klammern und Android Studio kümmert sich um den Rest:
 
 ![](images/tic-tac-toe-set-on-click-listener.gif)
 
-Der Code ist ganz einfach: wenn das Feld geglickt wird, setzten wir den `text` von `topLeftText` auf `X`:
+Der Code ist ganz einfach: Wenn das Feld geglickt wird, setzten wir den `text` von `topLeftText` auf `X`:
 
 ```kt
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,9 +145,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
+Du kannst jetzt deinen Code im Emulator testen: Wenn du auf das oberste, linke Feld klickst, erscheint ein "X".
+
 ![](images/tic-tac-toe-click.gif)
 
-Wir wollen den gleichen Click Listener für alle text Felder definieren. Dafür definieren wir eine Liste von Felder und brauchen eine `For`-Schleife und den Empfänger (_Listener_) zu definieren:
+Wenn der Emulator schon läuft, kannst du auf "'Run' App" ![](images/android-studio-run-app-restart.png) klicken, um die App wieder zu laden, ohne den ganzen Emulator neuzustarten.
+
+Wir wollen den gleichen Click Listener für alle Textfelder definieren. Dafür definieren wir eine Liste von Felder und brauchen eine `For`-Schleife und den Empfänger (_Listener_) zu definieren:
 
 Wir ersetzen
 
@@ -172,15 +175,16 @@ for (textField in textFields) {
 }
 ```
 
-Wir haben drei Änderungen gemacht:
+Wir haben vier Änderungen gemacht:
 
-- zuerst haben wir die neun felder aus dem Layout in der Array `textFields`,
-- mit eine `for`-Schleife gehen wir duch alle `textField` in `TextFields` durch,
-- wir setzen nicht mehr direkt den `X` im text vom `topLeftText`, sondern in dem `it` Parameter, den `setOnClickListener` uns zu verfügung stellt (du kannst ein Hinweis darauf neben der `{` sehen: `it:View!`)
+- zuerst haben wir  den `setOnClickListener` für `topLeftText` gelöscht.
+- dann haben wir die neun Felder aus dem Layout in das Array `textFields` eingefügt,
+- mit einer `for`-Schleife gehen wir duch alle `textField` in `TextFields` durch,
+- wir setzen nicht mehr direkt das `X` im `text` vom `topLeftText`, sondern setzen es in den `it` Parameter, den `setOnClickListener` uns zu Verfügung stellt (du kannst ein Hinweis darauf neben der `{` sehen: `it:View!`)
 
-Und schon können wir alle neun `X` setzen.
+Und schon können wir die Emulation starten und alle neun `X` setzen.
 
-Aber es soll abwechslungsweise eine `X` und eine `0` setzen! Wir definieren also ein _Class field_ mit den Zeichen `X` oder `0`:
+Aber es soll abwechslungsweise eine `X` und eine `0` geben! Wir definieren deshalb ein _Class field_ mit den Zeichen `X` oder `0`:
 
 ```kt
 class MainActivity : AppCompatActivity() {
@@ -201,13 +205,16 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-Die wichtige Änderungen sind:
+Die wichtigen Änderungen sind:
 
 - wir definieren `currentSign`, initialisiert auf `X`
-- beim Clicken setzen wir den Text auf dem Wert von `currentSign`...
+- beim Klicken setzen wir den Text auf den Wert von `currentSign`...
 - ... und wir setzen `currentSign` abwechslungsweise auf `X` und `0`
 
-Aber es gibt ein Problem: wir können auf dem gleichen Feld zwei Mal klicken und den Zeichen ändern. Das sollte nicht sein:
+Und - funktioniert's in der Simulation?
+
+Aber es gibt ein Problem: Wir können auf dem gleichen Feld zweimal klicken und das Zeichen ändern.  
+Das sollte nicht sein:
 
 ```kt
 textField.setOnClickListener { view ->
@@ -219,91 +226,46 @@ textField.setOnClickListener { view ->
 }
 ```
 
-- wir _umbenennen_ den `it` parameter in `view` und casten zu eine `TextView`,
-- bevor wir den Text-Feld setzen, prüfen wir, ob der Text noch leer ist.
+- wir benennen den `it` parameter in `view` um und casten ihn zu eine `TextView`,
+- bevor wir das Text-Feld setzen, prüfen wir, ob der Text noch leer ist.
 
-Es gibt noch ein Schönheitsfehler: der Statustext wird nicht aktualisiert: Wir fügen diese Zeile am Ende der `if`-Bedingung:
+Nun kann man nicht mehr auf ein besetztes Feld ein zweites Mal klicken, oder?
+
+Es gibt noch einen Schönheitsfehler: In der App wird der Statustext nicht aktualisiert: Wir fügen diese Zeile am Ende der `if`-Bedingung hinzu:
 
 ```kt
 statusText.text = "${currentSign} ist an der Reihe"
 ```
 
-Fehlt noch was? Das Spiel soll prüfen, ob jemand gewonnen hat!
+Fehlt noch was? Klar, wer hat nun gewonnen?
 
 ## Hat jemand gewonnen?
 
-Um zu wissen, ob jemand gewonnen hat, muss das Programm prüfen, ob die es drei Nachbarfelder gleich sind.
+Um zu wissen, ob jemand gewonnen hat, muss das Programm prüfen, ob drei Nachbarfelder gleich sind.
 
-Dafür fügen wir zur Klasse `MainActivity` die private Funktion `isWinner()`:
+Dafür fügen wir zur Klasse `MainActivity` die private Funktion `isWinner()` hinzu: nach dem Ende von `onCreate()`, aber vor der schliessenden geschleiften Klammer `}` der Klasse.
 
 ```kt
-    fun isWinner(): Boolean {
+    private fun isWinner(): Boolean {
         return topLeftText.text == topCenterText && topCenterText == topRightText
     }
 ```
 
-In einem ersten Schritt prüfen wir, ob die drei Felder in der erste Zeile gleich sind.
+In einem ersten Schritt prüfen wir, ob die drei Felder in der erste Zeile gleich sind:
+- `==` ist ein Vergleich (`=` ist eine Zuweisung: nicht genauch das Gleiche),
+- und `&&` heisst "und".
 
-Ist das genug? Nein, wir müssen auch sicherstellen, dass sie entweder `X` oder `0`. Wenn all drei Felder leer sind, hat noch niemand gewonnen:
-
-```kt
-    fun isWinner(): Boolean {
-        return topLeftText.text != "" && topLeftText.text == topCenterText && topCenterText == topRightText
-    }
-```
-
-Es geht weiter mit der zweite Zeile:
+Ist das genug? Nein, auch drei leere Felder wären gleich: Das müssen wir ausschliessen. Bevor wir die gleicheit prüfen, stellen wir sicher, dass das erste Feld nicht leer ist:
 
 ```kt
     fun isWinner(): Boolean {
-        return (topLeftText.text != "" && topLeftText.text == topCenterText && topCenterText == topRightText) ||
-            (centerLeftText.text != "" && centerLeftText.text == centerCenterText && centerCenterText == centerRightText)
+        return topLeftText.text != "" && topLeftText.text == topCenterText.text && topCenterText.text == topRightText.text
     }
 ```
 
-... und die dritte:
+Kleiner Tipp: hast du gemerkt, dass du `tLT` tippen kannst, und Android Studio sofort `topLeftText` vorschlägt?
 
-```kt
-    fun isWinner(): Boolean {
-        return (topLeftText.text != "" && topLeftText.text == topCenterText && topCenterText == topRightText) ||
-            (centerLeftText.text != "" && centerLeftText.text == centerCenterText && centerCenterText == centerRightText) ||
-            (bottomLeftText.text != "" && bottomLeftText.text == bottomCenterText && bottomCenterText == bottomRightText)
-    }
-```
-
-Es ist noch lange noch nicht fertig, wir wiederholen wir hier aber stark. Wir können eine zweite Funktion hinzufügen: `areEqual()`.
-
-
-```kt
-fun isWinner(): Boolean {
-    return areEqual(topLeftText, topCenterText, topRightText) ||
-            areEqual(centerLeftText, centerCenterText, centerRightText) ||
-            areEqual(bottomLeftText, bottomCenterText, bottomRightText)
-}
-
-fun areEqual(a: TextView, b:TextView, c: TextView): Boolean {
-    return a.text != "" && a.text == b.text && b.text == c.text
-}
-```
-
-Wir müssen nur noch die Spalten und die zwei Diagonalen prüfen...
-
-```kt
-fun isWinner(): Boolean {
-    val horizontal =  areEqual(topLeftText, topCenterText, topRightText) ||
-            areEqual(centerLeftText, centerCenterText, centerRightText) ||
-            areEqual(bottomLeftText, bottomCenterText, bottomRightText)
-    val vertical = areEqual(topLeftText, centerLeftText, bottomLeftText) ||
-            areEqual(topCenterText, centerCenterText, bottomCenterText) ||
-            areEqual(topRightText, centerRightText, bottomRightText)
-    val diagonal = areEqual(topLeftText, centerCenterText, bottomRightText) ||
-            areEqual(topRightText, centerCenterText, bottomLeftText)
-    return horizontal || vertical || diagonal
-}
-```
-
-... und dann die Prüfung im Code einfügen:
-
+Bis jetzt prüfen wir nur die erste Zeile. Aber wir können bereits die `isWinner()` Prüfung im `setOnClickListener()` einfügen und dann testen, ob die App erkennt, dass jemand gewonnen hat:
 
 ```kt
 if (view.text == "") {
@@ -317,13 +279,70 @@ if (view.text == "") {
 }
 ```
 
+Es geht weiter mit der zweiten Zeile:
+
+```kt
+private fun isWinner(): Boolean {
+    return (topLeftText.text != "" && topLeftText.text == topCenterText.text && topCenterText.text == topRightText.text) ||
+        (centerLeftText.text != "" && centerLeftText.text == centerCenterText.text && centerCenterText.text == centerRightText.text)
+}
+```
+
+Die zwei Zeilen sind durch ein oder `||` verbunden: es reicht, dass eine von beide wahr ist.
+
+... und die dritte:
+
+```kt
+    fun isWinner(): Boolean {
+        return (topLeftText.text != "" && topLeftText.text == topCenterText.text && topCenterText.text == topRightText.text) ||
+            (centerLeftText.text != "" && centerLeftText.text == centerCenterText.text && centerCenterText.text == centerRightText.text) ||
+            (bottomLeftText.text != "" && bottomLeftText.text == bottomCenterText.text && bottomCenterText.text == bottomRightText.text)
+    }
+```
+
+Wir wiederholten uns in der Gleichheitsprüfung stark. Die Wiederholungen wollen wir durch eine Funktion `areEqual()` ersetzen, damit der Code lesbarer wird. Wir fügen deshalb eine zweite Funktion hinzu:
+
+```kt
+private fun areEqual(a: TextView, b:TextView, c: TextView): Boolean {
+    return a.text != "" && a.text == b.text && b.text == c.text
+}
+```
+
+... und dann in `isWinner()` drei Mal verwenden.
+
+```kt
+private fun isWinner(): Boolean {
+    return areEqual(topLeftText, topCenterText, topRightText) ||
+            areEqual(centerLeftText, centerCenterText, centerRightText) ||
+            areEqual(bottomLeftText, bottomCenterText, bottomRightText)
+}
+```
+
+Es ist noch nicht ganz fertig. Wir müssen nur noch die Spalten und die zwei Diagonalen prüfen...
+
+```kt
+private fun isWinner(): Boolean {
+    val horizontal =  areEqual(topLeftText, topCenterText, topRightText) ||
+            areEqual(centerLeftText, centerCenterText, centerRightText) ||
+            areEqual(bottomLeftText, bottomCenterText, bottomRightText)
+    val vertical = areEqual(topLeftText, centerLeftText, bottomLeftText) ||
+            areEqual(topCenterText, centerCenterText, bottomCenterText) ||
+            areEqual(topRightText, centerRightText, bottomRightText)
+    val diagonal = areEqual(topLeftText, centerCenterText, bottomRightText) ||
+            areEqual(topRightText, centerCenterText, bottomLeftText)
+    return horizontal || vertical || diagonal
+}
+```
+
 ## Ist das Spiel unentschieden?
 
-Das ist einfach: das Spiel ist unentschieden wenn alle Felder wurden ausgefüllt.
+Das ist einfach: das Spiel ist unentschieden, wenn alle Felder ausgefüllt wurden.
 
-Um das herauszufinden, wäre praktisch, auf der Liste alle Textfelder zugreifen zu können: wir können `textFields` in ein "Class field" umwandeln.
+Um das herauszufinden, wäre praktisch, auf die Liste alle Textfelder zugreifen zu können: wir können `textFields` in der `onCreate()` Funktion in ein "Class field" umwandeln.
 
-Android Studio kann ein Teil der Arbeit für dich erledigen: du kannst den `val` vor `textFields` löschen und dann auf der rote Glübirne klicken und "Create property 'textFields' property" auslösen.  
+Android Studio kann ein Teil der Arbeit für dich erledigen: du kannst das `val` vor `textFields` löschen und dann auf die rote Glübirne klicken und "Create property 'textFields' property" auslösen.  
+Das `textFields` Array wird damit _oben_ in der Klasse definiert (und nicht mehr in der `onCreate()` Funktion).
+
 Es gibt noch ein kleines Problem: bevor `onCreate()` die Verbindung mit dem Layout herstellt, kann `textFields` nicht gefüllt werden. Wir müssen das ausdrücklich mit `lateinit` angeben (und implizit versprechen, dass wir `textFields` nicht brauchen, bevor es vollständig ist):
 
 ```kt
@@ -350,7 +369,7 @@ class MainActivity : AppCompatActivity() {
 
 ![](images/tic-tac-toe-lateinit-text-fields.gif)
 
-Und jetzt können wir prüfen, ob alle Felder bereits ausgefüllt sind :
+Und jetzt können wir prüfen, ob das Spiel unentschieden endet. Falls alle Felder bereits ausgefüllt sind ist es Unentschieden:
 
 ```kt
 if (isWinner()) {
@@ -363,7 +382,7 @@ if (isWinner()) {
 }
 ```
 
-Die `else if`-Bedingung sieht sehr einfach aus: aber werden wir sie ohne weitere Kommentare auch verstehen, wenn wir in der Zukunft wieder mit diesem Code beschäftigen?
+Die `else if` Bedingung sieht sehr einfach aus: aber werden wir sie ohne weitere Kommentare auch verstehen, wenn wir uns in der Zukunft wieder mit diesem Code beschäftigen?
 
 Es ist doch besser eine kurze `isTie()` Funktion zu schreiben:
 
@@ -373,11 +392,11 @@ private fun isTie() {
 }
 ```
 
-Wir können auch den _Refactor_-Werkzeug von Android Studio gebrauchen:
+Wir können auch das _Refactor_-Werkzeug von Android Studio gebrauchen:
 
 ![](images/tic-tac-toe-refactor-is-tie.gif)
 
-Damit lernen wir, dass Kotlin eine Spezielle schreibart bietet, für Funktionen die aus eine einzelne Zeile bestehen:
+Damit lernen wir, dass Kotlin eine spezielle Schreibart bietet, für Funktionen, die aus einer einzelne Zeile bestehen:
 
 ```kt
 private fun isTie() = textFields.all { it.text != "" }
@@ -398,14 +417,12 @@ if (isWinner()) {
 
 ## Jedes Spiel hat ein Ende
 
-Nachdem jemand gewonnen hat, fügt jedes weitere Klick ein Zeichen hinzu bis alle Felder ausgefüllt sind.
-
-Wir wollen das ändern und dann das Spiel neustarten.
+Auch nachdem jemand gewonnen hat, fügt jedes weitere Klick ein Zeichen hinzu, bis alle Felder ausgefüllt sind. Das wollen wir ändern und dann das Spiel neustarten.
 
 Dafür brauchen wir:
 
 - Eine `gameOver` Variable die wir auf `true` setzen wenn, das Spiel zu Ende geht.
-- Eine `if`-Bedingung die prüft, das Spiel zu Ende ist.
+- Eine `if` Bedingung die prüft, dass das Spiel zu Ende ist.
 - Eine `resetGame` Funktion, die das Brett wieder leert.
 
 Zuerst definieren wir die `gameOver` Klassenfeld:
@@ -449,7 +466,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-... und schliesslich `gameOver` als `true` setzen wenn jemand gewonnen hat oder das Spiel unentschieden ist und dann, beim nächsten Klick, das Spiel neustarten:
+... und schliesslich `gameOver` als `true` setzen, wenn jemand gewonnen hat oder das Spiel unentschieden ist und dann, beim nächsten Klick, das Spiel neustarten:
 
 ```kt
 for (textField in textFields) {
@@ -475,6 +492,13 @@ for (textField in textFields) {
     }
 }
 ```
+
+## Was haben wir gelernt?
+
+- Felder aus dem Layout _lesen_ und _schreiben_
+- Mit Android Studio code zu schreiben.
+- auf "Klick"/"Touch" Events zu reagieren
+- Refactoring: nachdem wir Code geschrieben haben, können wir über die Bücher gehen, und schauen wie wir den Code verbessern können, ohne neue Features hinzufügen. Android Studio gibt uns mächtige Tools um das Refactoring zu beschleunigen.
 
 ## Todo
 
